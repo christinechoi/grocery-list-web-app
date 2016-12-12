@@ -1,7 +1,7 @@
-<h1>Welcome, <%= current_user.username %></h1>
+<h1>Welcome, <%= @user.username %></h1>
 
 <h3>Grocery List:</h3>
-<% current_user.items.all each do |item| %>
-  <%= item.name %> - <%= item.quantity %>
+<% @user.items.each do |item| %>
+  <%= item.name %> - <%= item.quantity %> <a href="/items/edit/<%= item.id %>">Edit</a> <a href="/items/delete/<%= item.id %>">Delete</a>
   <br>
 <% end %>

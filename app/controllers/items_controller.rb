@@ -15,7 +15,8 @@ class ItemsController < ApplicationController
       redirect to '/items/new'
     else
       current_user.items.create(name: params[:name], quantity: params[:quantity])
-      redirect to "/users/#{@current_user.slug}"
+      binding.pry
+      redirect to "/users/#{current_user.slug}"
     end
   end
 end
