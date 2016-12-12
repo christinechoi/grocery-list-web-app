@@ -20,10 +20,20 @@ class UsersController < ApplicationController
     # If the user did not enter a username and password then they have to fill out the form again
     if params[:username] == "" || params[:password] == ""
       redirect to '/signup'
-    else  # Otherwise a new user is created with the info and the user is then redirected to tweets
+    else  # Otherwise a new user is created with the info and the user is then redirected to their page
       @user = User.create(username: params[:username], password: params[:password])
       session[:user_id] = @user.id
       redirect to "/users/#{current_user.slug}"
+    end
+  end
+
+  # Loads the login page, which contains a form used to login
+  get '/login' do
+    # If a user is already logged in, then they cannot log in again, so they'll be redirected to thir page
+    if logged_in?
+      redirect to "/users/#{current_user.slug}"
+    else
+      erb :"users/login"
     end
   end
 end
