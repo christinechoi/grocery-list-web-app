@@ -36,4 +36,6 @@ class UsersController < ApplicationController
       erb :"users/login"
     end
   end
+
+  
 end
