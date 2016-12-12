@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
   # Loads a user's page
   get '/users/:slug' do
-    @user = User.find_by_slug(params[:slug])
-    erb :"users/show"
+    if logged_in?
+      @user = User.find_by_slug(params[:slug])
+      erb :"users/show"
+    else
+      redirect to '/login'
+    end
   end
 
   # Loads the create_user page, which contains a form to create a new user
