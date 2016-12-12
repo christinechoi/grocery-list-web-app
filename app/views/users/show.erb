@@ -1,5 +1,6 @@
 <h1>Welcome, <%= current_user.username %></h1>
 
+<h3>Grocery List:</h3>
 <% current_user.items.all each do |item| %>
   <%= item.name %> - <%= item.quantity %>
   <br>
