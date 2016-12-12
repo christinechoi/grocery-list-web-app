@@ -1,5 +1,7 @@
 <h1>Welcome, <%= current_user.username %></h1>
 
+<a href="/items/new">Add an item to your list</a>
+
 <h3>Grocery List:</h3>
 <% current_user.items.each do |item| %>
   <%= item.name %> - <%= item.quantity %> <a href="/items/<%= item.id %>/edit">Edit</a>
