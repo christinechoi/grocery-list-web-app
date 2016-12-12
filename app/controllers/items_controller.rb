@@ -15,7 +15,6 @@ class ItemsController < ApplicationController
       redirect to '/items/new'
     else
       current_user.items.create(name: params[:name], quantity: params[:quantity])
-      binding.pry
       redirect to "/users/#{current_user.slug}"
     end
   end
@@ -41,7 +40,18 @@ class ItemsController < ApplicationController
       @item.quantity = params[:quantity] # Updates the item with the new quantity
       @item.save
 
-      redirect to "/users/#{current_user.id}"
+      redirect to "/users/#{current_user.slug}"
+    end
+  end
+
+  # Deletes an item
+  delete '/items/:id/delete' do
+    if logged_in? # A user can only delete an item if they're logged in
+      @item = Item.find_by_id(params[:id])
+      @item.delete
+      redirect to "/users/#{current_user.slug}"
+    else
+      redirect to '/login' # If the user isn't logged in, they're directed to the login page.
     end
   end
 end
