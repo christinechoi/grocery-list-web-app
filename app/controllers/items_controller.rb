@@ -11,7 +11,7 @@ class ItemsController < ApplicationController
 
   # Gets the input from the create item form and creates the item
   post '/items' do
-    if params[:name] == "" # The user cannot create a blank item
+    if params[:name] == "" || params[:quantity] == "" # The user cannot create a blank item
       redirect to '/items/new'
     else
       current_user.items.create(name: params[:name], quantity: params[:quantity])
@@ -27,6 +27,21 @@ class ItemsController < ApplicationController
       erb :'/items/edit_item'
     else
       redirect to '/login' # If they aren't logged in, they're directed to the login page.
+    end
+  end
+
+  # Gets the input from the form to edit an item
+  patch '/items/:id' do
+    @item = Item.find_by_id(params[:id])
+
+    if params[:name] == "" || params[:quantity] == ""# The user cannot create a blank item
+      redirect to "/items/#{@item.id}/edit"
+    else
+      @item.name = params[:name] # Updates the item with the new name
+      @item.quantity = params[:quantity] # Updates the item with the new quantity
+      @item.save
+
+      redirect to "/users/#{current_user.id}"
     end
   end
 end
