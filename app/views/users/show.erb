@@ -1,7 +1,12 @@
-<h1>Welcome, <%= @user.username %></h1>
+<h1>Welcome, <%= current_user.username %></h1>
 
 <h3>Grocery List:</h3>
-<% @user.items.each do |item| %>
-  <%= item.name %> - <%= item.quantity %> <a href="/items/edit/<%= item.id %>">Edit</a> <a href="/items/delete/<%= item.id %>">Delete</a>
+<% current_user.items.each do |item| %>
+  <%= item.name %> - <%= item.quantity %> <a href="/items/<%= item.id %>/edit">Edit</a>
+  <form method="POST" action="/items/<%= item.id %>/delete">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+
+    <input type="submit" value="Delete">
+  </form>
   <br>
 <% end %>
