@@ -19,4 +19,14 @@ class ItemsController < ApplicationController
       redirect to "/users/#{current_user.slug}"
     end
   end
+
+  # Loads the edit_item page, which contains a form for the user to edit an item
+  get '/items/:id/edit' do
+    if logged_in? # The user can only edit an item if they're logged in
+      @item = Item.find_by_id(params[:id])
+      erb :'/items/edit_item'
+    else
+      redirect to '/login' # If they aren't logged in, they're directed to the login page.
+    end
+  end
 end
