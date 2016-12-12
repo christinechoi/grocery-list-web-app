@@ -9,6 +9,14 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "grocery_secret"
   end
 
+  get '/' do
+    if logged_in?
+      redirect to "/users/#{current_user.slug}"
+    else
+      erb :index
+    end
+  end
+
   # Helper methods
   helpers do
     # Check if user is logged in
